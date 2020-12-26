@@ -17,7 +17,9 @@ def hotels():
 
 @app.route('/restaurants/')
 def restaurants():
-	return render_template('restaurants.html')
+	restaurantes = requests.get(dominioApi + '/api/v1/restaurants')
+	restaurantes = restaurantes.json()
+	return render_template('restaurants.html',restaurantes=restaurantes['restaurants'])
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1',port='5001',debug=True)

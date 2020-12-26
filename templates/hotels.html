@@ -1,25 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} HOTELES {% endblock %}</h1>
+    <h1>{% block title %} Hoteles en Región del Maule {% endblock %}</h1>
 
+    <div class="col-md-12">
     {% for hotel in hoteles %}
-
-		<div class="card mb-3" style="max-width: 540px;">
-		  <div class="row no-gutters">
-		    <div class="col-md-4">
-		      <img src="..." class="card-img" alt="...">
-		    </div>
-		    <div class="col-md-8">
-		      <div class="card-body">
-		        <h5 class="card-title">{{ hotel.nombre }}</h5>
-		        <p class="card-text">{{ hotel.valoracion }} - {{ hotel.num_valoracion }}</p>
-		        <p class="card-text"><small class="text-muted">{{ hotel.ciudad }}</small></p>
-		      </div>
-		    </div>
-		  </div>
+    	<div class="col-md-6">
+			<div class="card mb-3">
+			  <div class="row no-gutters">
+			    <div class="col-md-4">
+			      <img src="../img/01.jpg" class="card-img">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">{{ hotel.nombre }}</h5>
+			        <p class="card-text">{{ hotel.valoracion }} - {{ hotel.num_valoracion }}</p>
+			        <p class="card-text"><small class="text-muted">{{ hotel.ciudad }}</small></p>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		</div>
-
     {% endfor %}
+    </div>
 
 {% endblock %}
