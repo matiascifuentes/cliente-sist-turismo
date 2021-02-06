@@ -21,5 +21,11 @@ def restaurants():
 	restaurantes = restaurantes.json()
 	return render_template('restaurants.html',restaurantes=restaurantes['restaurants'])
 
+@app.route('/atractions/')
+def atractions():
+	atracciones = requests.get(dominioApi + '/api/v1/atractions')
+	atracciones = atracciones.json()
+	return render_template('atracciones.html',atracciones=atracciones['atractions'])
+
 if __name__ == '__main__':
 	app.run(host='127.0.0.1',port='5001',debug=True)
