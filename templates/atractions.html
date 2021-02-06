@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Atracciones en Región del Maule {% endblock %}</h1>
+
+    <div class="col-md-12">
+    {% for atraccion in atracciones %}
+    	<div class="col-md-6">
+			<div class="card mb-3">
+			  <div class="row no-gutters">
+			    <div class="col-md-4">
+			      <img src="{{ 'http://127.0.0.1:5000/static/images/atraccion/' + atraccion.cod_atraccion + '.jpg' }}" class="card-img" alt="...">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">
+			        	<a href="{{ restaurant.url }}">{{ atraccion.nombre }}</a>
+			    	</h5>
+			        <p class="card-text">{{ atraccion.valoracion }} - {{ atraccion.num_valoracion }}</p>
+			        <p class="card-text"><small class="text-muted">{{ atraccion.ciudad }}</small></p>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
