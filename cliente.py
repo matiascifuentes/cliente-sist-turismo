@@ -40,7 +40,7 @@ def atractions():
 	atracciones = atracciones.json()
 	return render_template('atractions.html',atracciones=atracciones['atractions'])
 
-@app.route('/atractions/<cod_atraction>')
+@app.route('/atractions/<cod_atraccion>')
 def atraction(cod_atraccion):
 	atraccion = requests.get(dominioApi + '/api/v1/atractions/' + cod_atraccion)
 	atraccion = atraccion.json()
