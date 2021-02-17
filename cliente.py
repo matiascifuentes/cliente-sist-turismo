@@ -15,6 +15,13 @@ def hotels():
 	#VERIFICAR RESPUESTA
 	return render_template('hotels.html',hoteles=hoteles['hotels'])
 
+@app.route('/hotels/<cod_hotel>')
+def hotel(cod_hotel):
+	hotel = requests.get(dominioApi + '/api/v1/hotels/' + cod_hotel)
+	hotel = hotel.json()
+	#VERIFICAR RESPUESTA
+	return render_template('hotel.html',hotel=hotel['hotel'])
+
 @app.route('/restaurants/')
 def restaurants():
 	restaurantes = requests.get(dominioApi + '/api/v1/restaurants')
