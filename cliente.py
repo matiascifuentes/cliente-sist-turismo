@@ -28,6 +28,12 @@ def restaurants():
 	restaurantes = restaurantes.json()
 	return render_template('restaurants.html',restaurantes=restaurantes['restaurants'])
 
+@app.route('/restaurants/<cod_restaurant>')
+def restaurant(cod_restaurant):
+	restaurant = requests.get(dominioApi + '/api/v1/restaurants/' + cod_restaurant)
+	restaurant = restaurant.json()
+	return render_template('restaurant.html',restaurant=restaurant['restaurant'])
+
 @app.route('/atractions/')
 def atractions():
 	atracciones = requests.get(dominioApi + '/api/v1/atractions')
