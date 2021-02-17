@@ -38,7 +38,13 @@ def restaurant(cod_restaurant):
 def atractions():
 	atracciones = requests.get(dominioApi + '/api/v1/atractions')
 	atracciones = atracciones.json()
-	return render_template('atracciones.html',atracciones=atracciones['atractions'])
+	return render_template('atractions.html',atracciones=atracciones['atractions'])
+
+@app.route('/atractions/<cod_atraction>')
+def atraction(cod_atraccion):
+	atraccion = requests.get(dominioApi + '/api/v1/atractions/' + cod_atraccion)
+	atraccion = atraccion.json()
+	return render_template('atraction.html',atraccion=atraccion['atraction'])
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1',port='5001',debug=True)
