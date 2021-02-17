@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Restaurantes en Región del Maule {% endblock %}</h1>
 
     <div class="col-md-12">
-    {% for restaurant in restaurantes %}
+    {% if restaurant%}
     	<div class="col-md-6">
 			<div class="card mb-3">
 			  <div class="row no-gutters">
 			    <div class="col-md-4">
-			      <img src="{{ 'http://127.0.0.1:5000/static/images/restaurant/' + restaurant.id_servicio + '.jpg' }}" class="card-img" alt="...">
+			      <img src="{{ 'http://127.0.0.1:5000/static/images/restaurant/' + restaurant.cod_restaurant + '.jpg' }}" class="card-img" alt="...">
 			    </div>
 			    <div class="col-md-8">
 			      <div class="card-body">
 			        <h5 class="card-title">
-			        	<a href="{{ 'http://127.0.0.1:5001/restaurants/' + restaurant.id_servicio }}">{{ restaurant.nombre }}</a>
+			        	{{ restaurant.nombre }}
 			    	</h5>
 			        <p class="card-text">{{ restaurant.valoracion }} - {{ restaurant.num_valoracion }}</p>
 			        <p class="card-text"><small class="text-muted">{{ restaurant.ciudad }}</small></p>
@@ -23,7 +22,7 @@
 			  </div>
 			</div>
 		</div>
-    {% endfor %}
+    {% endif %}
     </div>
 
 {% endblock %}
