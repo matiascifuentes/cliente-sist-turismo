@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask_login import LoginManager, current_user, login_user, logout_user
+from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import requests
 from models import users, LoginForm, get_user
 from werkzeug.urls import url_parse
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
@@ -51,6 +52,64 @@ def atraction(cod_atraccion):
 	atraccion = requests.get(dominioApi + '/api/v1/atractions/' + cod_atraccion)
 	atraccion = atraccion.json()
 	return render_template('atraction.html',atraccion=atraccion['atraction'])
+
+@app.route('/carro/add/<id>',methods=["get","post"])
+@login_required
+def carro_add(id):
+	try:
+		datos = json.loads(request.cookies.get(str(current_user.id)))
+	except:
+		datos = []
+	
+	exists = False
+	for dato in datos:
+	    if dato['id'] == id:
+	        exists = True
+	        break
+
+	if not exists:
+		datos.append({"id":id})
+	
+	resp = make_response(redirect(url_for('carro')))
+	resp.set_cookie(str(current_user.id),json.dumps(datos))
+	return resp
+
+
+@app.route('/carro', methods=['GET'])
+@login_required
+def carro():
+	try:
+		datos = json.loads(request.cookies.get(str(current_user.id)))
+	except:
+		datos = []
+	servicios = []
+	for servicio in datos:
+		servicios.append(servicio['id'])
+	#return render_template("carro.html",servicios=servicios)
+	return json.dumps(datos)
+
+@app.route('/carro/delete/<id>')
+@login_required
+def carro_delete(id):
+	try:
+		datos = json.loads(request.cookies.get(str(current_user.id)))
+	except:
+		datos = []
+	new_datos=[]
+	for dato in datos:
+		if dato['id']!=id:
+			new_datos.append(dato)
+	resp = make_response(redirect(url_for('carro')))
+	resp.set_cookie(str(current_user.id),json.dumps(new_datos))
+	return resp
+
+@app.route('/carro/delete')
+@login_required
+def carro_delete_all():
+	new_datos = []
+	resp = make_response(redirect(url_for('carro')))
+	resp.set_cookie(str(current_user.id),json.dumps(new_datos))
+	return resp
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
