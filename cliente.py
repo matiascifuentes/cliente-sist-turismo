@@ -84,9 +84,8 @@ def carro():
 		datos = []
 	servicios = []
 	for servicio in datos:
-		servicios.append(servicio['id'])
-	#return render_template("carro.html",servicios=servicios)
-	return json.dumps(datos)
+		servicios.append(servicio)
+	return render_template("carro.html",servicios=servicios)
 
 @app.route('/carro/delete/<id>')
 @login_required

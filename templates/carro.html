@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %}Carro{% endblock %}</h1>
+    {% if servicios|length > 0 %}
+    <a href="{{url_for('carro_delete_all')}}"><span class="glyphicon glyphicon-trash"></span>Vaciar</a>
+    <div class="col-md-12">
+        <div class="list-group">
+          <table class="table table-bordered">
+              <tr>
+                <th>ID</th>
+                <th>Eliminar</th>
+              </tr>
+          {% for servicio in servicios %}
+            <tr>
+              <td>{{servicio.id}}</td>
+              <td><a href="{{url_for('carro_delete',id=servicio.id)}}"><span class="glyphicon glyphicon-trash"></span> Borrar</a></td>
+            </tr>
+          {% endfor %}
+          </table>
+        </div>
+    </div>
+    </div>
+    {% else %}
+      <h2>El carro está vacío</h2>
+    {% endif %}
+{% endblock %}
