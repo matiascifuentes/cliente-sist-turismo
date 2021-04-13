@@ -53,6 +53,26 @@ def atraction(cod_atraccion):
 	atraccion = atraccion.json()
 	return render_template('atraction.html',atraccion=atraccion['atraction'])
 
+@app.route('/carro/addlist',methods=["get","post"])
+@login_required
+def add_list():
+	url = dominioApi + '/api/v1/lists'
+	try:
+		carro = json.loads(request.cookies.get(str(current_user.id)))
+	except:
+		carro = []
+	if len(carro) > 0:
+		servicios = []
+		for servicio in carro:
+			servicios.append({"id_servicio": servicio['id']})
+		lista = {
+			"id_usuario": 1,
+			"servicios": servicios
+		}	
+		response = requests.request("POST", url, headers={}, json=lista)
+		return carro_delete_all()
+	return carro()
+
 @app.route('/carro/add/<id>',methods=["get","post"])
 @login_required
 def carro_add(id):
