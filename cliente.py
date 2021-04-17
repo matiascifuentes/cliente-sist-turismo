@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import requests
-from models import users, LoginForm, get_user
+from models import LoginForm, User, get_user
 from werkzeug.urls import url_parse
 import json
 
@@ -152,9 +152,10 @@ def logout():
 
 @login_manager.user_loader
 def load_user(user_id):
-    for user in users:
-        if user.id == int(user_id):
-            return user
+    response = requests.request("GET","http://127.0.0.1:5000/api/v1/users/" + user_id + "/byid", headers={})
+    if(response.status_code == 200 and 'user' in response.json()):
+        user = response.json()['user']
+        return User(user_id,user['nombre'],user['correo'],user['password'],is_hash=True)
     return None
 
 if __name__ == '__main__':
