@@ -3,13 +3,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Email, Length
+import requests
 
 class User(UserMixin):
-    def __init__(self, id, name, email, password, is_admin=False):
+    def __init__(self, id, name, email, password, is_hash=False, is_admin=False):
         self.id = id
         self.name = name
         self.email = email
-        self.password = generate_password_hash(password)
+        if (is_hash):
+            self.password = password
+        else:
+            self.password = generate_password_hash(password)
         self.is_admin = is_admin
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -24,9 +28,9 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Recuérdame')
     submit = SubmitField('Login')
 
-users = [User(1,'matias','matias@gmail.com','12345')]
 def get_user(email):
-    for user in users:
-        if user.email == email:
-            return user
+    response = requests.request("GET","http://127.0.0.1:5000/api/v1/users/" + email + "/byemail", headers={})
+    if(response.status_code == 200 and 'user' in response.json()):
+        user = response.json()['user']
+        return User(user['id_usuario'],user['nombre'],email,user['password'],is_hash=True)
     return None
