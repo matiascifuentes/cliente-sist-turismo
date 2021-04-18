@@ -12,10 +12,12 @@ login_manager.login_view = "login"
 dominioApi = 'http://127.0.0.1:5000'
 
 @app.route('/')
+@login_required
 def index():
 	return render_template('index.html')
 
 @app.route('/hotels/')
+@login_required
 def hotels():
 	hoteles = requests.get(dominioApi + '/api/v1/hotels')
 	hoteles = hoteles.json()
@@ -23,6 +25,7 @@ def hotels():
 	return render_template('hotels.html',hoteles=hoteles['hotels'])
 
 @app.route('/hotels/<cod_hotel>')
+@login_required
 def hotel(cod_hotel):
 	hotel = requests.get(dominioApi + '/api/v1/hotels/' + cod_hotel)
 	hotel = hotel.json()
@@ -30,24 +33,28 @@ def hotel(cod_hotel):
 	return render_template('hotel.html',hotel=hotel['hotel'])
 
 @app.route('/restaurants/')
+@login_required
 def restaurants():
 	restaurantes = requests.get(dominioApi + '/api/v1/restaurants')
 	restaurantes = restaurantes.json()
 	return render_template('restaurants.html',restaurantes=restaurantes['restaurants'])
 
 @app.route('/restaurants/<cod_restaurant>')
+@login_required
 def restaurant(cod_restaurant):
 	restaurant = requests.get(dominioApi + '/api/v1/restaurants/' + cod_restaurant)
 	restaurant = restaurant.json()
 	return render_template('restaurant.html',restaurant=restaurant['restaurant'])
 
 @app.route('/atractions/')
+@login_required
 def atractions():
 	atracciones = requests.get(dominioApi + '/api/v1/atractions')
 	atracciones = atracciones.json()
 	return render_template('atractions.html',atracciones=atracciones['atractions'])
 
 @app.route('/atractions/<cod_atraccion>')
+@login_required
 def atraction(cod_atraccion):
 	atraccion = requests.get(dominioApi + '/api/v1/atractions/' + cod_atraccion)
 	atraccion = atraccion.json()
