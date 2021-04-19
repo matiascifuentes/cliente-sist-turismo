@@ -73,7 +73,7 @@ def add_list():
 		for servicio in carro:
 			servicios.append({"id_servicio": servicio['id']})
 		lista = {
-			"id_usuario": 1,
+			"id_usuario": str(current_user.id),
 			"servicios": servicios
 		}	
 		response = requests.request("POST", url, headers={}, json=lista)
