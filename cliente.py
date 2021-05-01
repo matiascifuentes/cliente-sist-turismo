@@ -29,8 +29,10 @@ def hotels():
 def hotel(cod_hotel):
 	hotel = requests.get(dominioApi + '/api/v1/hotels/' + cod_hotel)
 	hotel = hotel.json()
+	recomendaciones = requests.get(dominioApi + '/api/v1/recommendations/' + cod_hotel)
+	recomendaciones = recomendaciones.json()
 	#VERIFICAR RESPUESTA
-	return render_template('hotel.html',hotel=hotel['hotel'])
+	return render_template('hotel.html',hotel=hotel['hotel'],recomendaciones=recomendaciones['recommendations'])
 
 @app.route('/restaurants/')
 @login_required
@@ -44,7 +46,9 @@ def restaurants():
 def restaurant(cod_restaurant):
 	restaurant = requests.get(dominioApi + '/api/v1/restaurants/' + cod_restaurant)
 	restaurant = restaurant.json()
-	return render_template('restaurant.html',restaurant=restaurant['restaurant'])
+	recomendaciones = requests.get(dominioApi + '/api/v1/recommendations/' + cod_restaurant)
+	recomendaciones = recomendaciones.json()
+	return render_template('restaurant.html',restaurant=restaurant['restaurant'],recomendaciones=recomendaciones['recommendations'])
 
 @app.route('/atractions/')
 @login_required
@@ -58,7 +62,9 @@ def atractions():
 def atraction(cod_atraccion):
 	atraccion = requests.get(dominioApi + '/api/v1/atractions/' + cod_atraccion)
 	atraccion = atraccion.json()
-	return render_template('atraction.html',atraccion=atraccion['atraction'])
+	recomendaciones = requests.get(dominioApi + '/api/v1/recommendations/' + cod_atraccion)
+	recomendaciones = recomendaciones.json()
+	return render_template('atraction.html',atraccion=atraccion['atraction'],recomendaciones=recomendaciones['recommendations'])
 
 @app.route('/carro/addlist',methods=["get","post"])
 @login_required

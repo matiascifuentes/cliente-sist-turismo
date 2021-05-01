@@ -2,9 +2,18 @@
 
 {% block content %}
 
-    <div class="col-md-12">
+    <div class="row">
     {% if restaurant%}
-    	<div class="col-md-6">
+    	<div class="col-md-3">
+    		{% if recomendaciones %}
+    		{% for recomendacion in recomendaciones %}
+    			<div class="row">
+    				<a href="{{ 'http://127.0.0.1:5001/' + recomendacion.tipo + '/' + recomendacion.id }}">{{ recomendacion.id }}</a>
+    			</div>
+    		{% endfor %}
+    		{% endif %}
+    	</div>
+    	<div class="col-md-9">
 			<div class="card mb-3">
 			  <div class="row no-gutters">
 			    <div class="col-md-4">
@@ -21,8 +30,8 @@
 			    </div>
 			  </div>
 			</div>
+			<a href="{{url_for('carro_add',id=restaurant.id_servicio)}}">Agregar</a>
 		</div>
-		<a href="{{url_for('carro_add',id=restaurant.id_servicio)}}">Agregar</a>
     {% endif %}
     </div>
 
