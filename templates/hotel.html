@@ -4,20 +4,43 @@
 
     <div class="row">
     {% if hotel %}
+    	{% if recomendaciones %}
     	<div class="col-md-3">
-    		{% if recomendaciones %}
     		{% for recomendacion in recomendaciones %}
-    			<div class="row">
-    				<a href="{{ 'http://127.0.0.1:5001/' + recomendacion.tipo + '/' + recomendacion.id }}">{{ recomendacion.id }}</a>
-    			</div>
+			<div class="row">
+				<div class="card mb-3" style="width:100%;height:auto;">
+				  <div class="row no-gutters">
+				    <div class="col-md-4">
+				      	<img src="{{ 'http://127.0.0.1:5000/static/images/' + recomendacion.tipo + '/' + recomendacion.id + '.jpg' }}" class="card-img" alt="..." style="
+				      	width:100%;height:auto;top:50%margin: 0;
+					  	position: absolute;
+					  	top: 50%;
+					    -ms-transform: translateY(-50%);
+					    transform: translateY(-50%);">
+										    </div>
+				    <div class="col-md-8">
+				      <div class="card-body">
+				        <h6 class="card-title">
+				        	<a href="{{ 'http://127.0.0.1:5001/' + recomendacion.tipo + '/' + recomendacion.id }}">{{recomendacion.nombre}}</a>
+				    	</h6>
+				    	<p class="card-text"><small class="text-muted">{{recomendacion.tipo}}</small></p>
+				    	<p class="card-text"><small class="text-muted">{{recomendacion.ciudad}}</small></p>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
     		{% endfor %}
-    		{% endif %}
     	</div>
     	<div class="col-md-9">
+    	{% else %}
+    	<div class="col-md-12">	
+    	{% endif %}
+    	
 			<div class="card mb-3">
 			  <div class="row no-gutters">
 			    <div class="col-md-4">
-			      <img src="{{ 'http://127.0.0.1:5000/static/images/hotel/' + hotel.id_servicio + '.jpg' }}" class="card-img" alt="...">
+			      <img src="{{ 'http://127.0.0.1:5000/static/images/hotels/' + hotel.id_servicio + '.jpg' }}" class="card-img" alt="...">
 			    </div>
 			    <div class="col-md-8">
 			      <div class="card-body">
@@ -26,11 +49,14 @@
 			    	</h5>
 			        <p class="card-text">{{ hotel.valoracion }} - {{ hotel.num_valoracion }}</p>
 			        <p class="card-text"><small class="text-muted">{{ hotel.ciudad }}</small></p>
+			        <a href="{{url_for('carro_add',id=hotel.id_servicio)}}">Agregar</a>
 			      </div>
 			    </div>
 			  </div>
 			</div>
-			<a href="{{url_for('carro_add',id=hotel.id_servicio)}}">Agregar</a>
+			<div class="row justify-content-center">
+				<iframe src="{{ hotel.url_mapa }}" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+			</div>
 		</div>
     {% endif %}
     </div>
