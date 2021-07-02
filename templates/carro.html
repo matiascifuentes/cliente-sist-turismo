@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %}Carro{% endblock %}</h1>
+    <h3><span class="badge badge-dark">{% block title %} Carro {% endblock %}</span></h3>
     {% if servicios|length > 0 %}
-    <a href="{{url_for('carro_delete_all')}}"><span class="glyphicon glyphicon-trash"></span>Vaciar</a>
+   
     <div class="col-md-12">
+      <div class="list-group">
+        <table class="table table-bordered">
+              <tr>
+                <th>
+                  <a href="{{url_for('carro_delete_all')}}">
+                    <button type="button" class="btn btn-danger">Vaciar</button>
+                  </a>
+
+                  <a href="{{url_for('add_list')}}">
+                    <button type="button" class="btn btn-primary">Crear lista</button>
+                  </a>
+                </th>
+              </tr>
+          </table>
+        <div class="row">
+          
+           
+        </div>
+         
+      </div>
         <div class="list-group">
           <table class="table table-bordered">
               <tr>
@@ -14,13 +34,14 @@
           {% for servicio in servicios %}
             <tr>
               <td>{{servicio.id}}</td>
-              <td><a href="{{url_for('carro_delete',id=servicio.id)}}"><span class="glyphicon glyphicon-trash"></span> Borrar</a></td>
+              <td><a href="{{url_for('carro_delete',id=servicio.id)}}">
+                <button type="button" class="btn btn-warning">Borrar</button>
+              </a></td>
             </tr>
           {% endfor %}
           </table>
         </div>
     </div>
-    <a href="{{url_for('add_list')}}"><span class="glyphicon glyphicon-trash"></span> Crear lista</a>
     {% else %}
       <h2>El carro está vacío</h2>
     {% endif %}
